@@ -19,11 +19,14 @@ export default class Pricing {
   }
 
   set currency(value) {
-    this.currency = value;
+    if (typeof (value) !== 'object') {
+      this._currency = new Currency(value);
+    }
+    this._currency = value;
   }
 
   displayFullPrice() {
-    return `${this._amount} ${this._currency.name} ${this.currency.code}`;
+    return `${this._amount} ${this._currency.name} (${this.currency.code})`;
   }
 
   static convertPrice(amount, conversionRate) {
