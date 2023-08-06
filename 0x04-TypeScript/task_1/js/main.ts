@@ -1,64 +1,44 @@
 interface Teacher {
 	readonly firstName: string;
-  readonly lastName: string;
-  fullTimeEmployee: boolean;
-  yearsOfExperience?: number;
-  location: string;
-  [key: string]: any;
+	readonly lastName: string;
+	fullTimeEmployee: boolean;
+	yearsOfExperience : number;
+	location: string;
+	[propName: string]: any;
 }
-
-// the readonly make the attribute to be only modifiable on initialization
-// ?: make the attribute optional
-// [key: string]: any; makes it possible to add additional attributes not defined in the interface
-
-const teacher3: Teacher = {
-  firstName: 'John',
-  lastName: 'Doe',
-  fullTimeEmployee: false,
-  location: 'London',
-  contract: false,
-};
-console.log(teacher3);
 
 interface Directors extends Teacher {
-  numberOfReports: number;
+	numberOfReports: number;
 }
-
-const director1: Directors = {
-  firstName: 'John',
-  lastName: 'Doe',
-  location: 'London',
-  fullTimeEmployee: true,
-  numberOfReports: 17,
-};
-console.log(director1);
 
 interface printTeacherFunction {
-  (firstName: string, lastName: string): string;
+	(firstName: string, lastName: string): string;
+}	
+
+const printTeacher: printTeacherFunction = function(firstName: string, lastName: string): string{
+	return `${firstName[0]}.${lastName}`;
 }
 
-const printTeacher: printTeacherFunction = (firstName, lastName) => {
-  firstName = firstName.slice(0,1);
-  return `${firstName}. ${lastName}`
-}
-console.log(printTeacher("John", "Doe"));
-
-interface forStudentclass {
-  firstName: string;
-  lastName: string;
+interface Scholar {
+	firstName: string;
+	lastName: string;
 }
 
-class StudentClass implements forStudentclass  {
-  constructor(public firstName: string, public lastName: string) {}
+class StudentClass implements Scholar {
+	firstName: string;
+	lastName: string;
 
-  workOnHomework() {
-    return "Currently working";
-  }
+	constructor(firstName: string, lastName: string){
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
 
-  displayName() {
-    return this.firstName;
-  }
+	workOnHomework(){
+		return 'Currently Working';
+	}
+
+	displayName(){
+		return this.firstName;
+	}	
 }
-const student1 = new StudentClass("john", "Doe");
-console.log(student1.displayName());
-console.log(student1.workOnHomework());
+
