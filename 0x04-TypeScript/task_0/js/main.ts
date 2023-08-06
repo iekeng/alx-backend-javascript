@@ -1,62 +1,66 @@
-interface Student {
+interface Student{
 	firstName: string;
-	lastName: string;
+	lastName :string;
 	age: number;
 	location: string;
-}
+	};
 
 const s1: Student = {
-	firstName: "Martins",
-	lastName: "Ndifon",
-	age: 30,
-	location: "Abuja",
-};
+	firstName: "David",
+	lastName: "Adeleke",
+	age: 29,
+	location: "Lagos",
+	};
 
 const s2: Student = {
-	firstName: "Charlian",
-	lastName: "Imoisili",
-	age: 25,
-	location: "Lagos",
-};
+	firstName: "Zlatan",
+	lastName: "Ibile",
+	age: 27,
+	location: "Ekiti",
+	};
 
-const studentsList: Student[] = [s1, s2];
+	const studentsList: Array<Student> = [s1, s2];
+	const body = document.querySelector('body');
 
-// Create the table element
-const table = document.createElement('table');
-table.id = 'studentsTable';
+	function renderTable(studentsList: Array<Student>){
+		const table = document.createElement('table');
+		
+		const tableHead = document.createElement('thead');
+		const headerRow = document.createElement('tr');
+		
+		const nameLabel = document.createElement('th');
+		nameLabel.textContent = 'First Name';
 
-// Create the table header
-const tableHead = document.createElement('thead');
-const headerRow = document.createElement('tr');
-const firstNameHeader = document.createElement('th');
-firstNameHeader.textContent = 'First Name';
-const locationHeader = document.createElement('th');
-locationHeader.textContent = 'Location';
+		const locationLabel = document.createElement('th');
+		locationLabel.textContent = 'Location';
 
-headerRow.appendChild(firstNameHeader);
-headerRow.appendChild(locationHeader);
-tableHead.appendChild(headerRow);
+		headerRow.appendChild(nameLabel);
+		headerRow.appendChild(locationLabel);
 
-// Create the table body
-const tableBody = document.createElement('tbody');
+		tableHead.appendChild(headerRow);
 
-// Append the table elements to the body
-table.appendChild(tableHead);
-table.appendChild(tableBody);
+		table.appendChild(tableHead);
 
-// Append the table to the body tag
-document.body.appendChild(table);
+		const tbody = document.createElement('tbody');
 
-const atableBody = document.querySelector('#studentsTable tbody');
+		studentsList.forEach((student: Student)=>{
+			const row = document.createElement('tr');
+			const nameCell = document.createElement('td');
+			nameCell.textContent = student.firstName;
+			const locationCell = document.createElement('td');
+			locationCell.textContent = student.location;
+			
+			row.appendChild(nameCell);
+			row.appendChild(locationCell);
 
-studentsList.forEach((student) => {
-  const row = document.createElement('tr');
-  const firstNameCell = document.createElement('td');
-  firstNameCell.textContent = student.firstName;
-  const locationCell = document.createElement('td');
-  locationCell.textContent = student.location;
+			tbody.appendChild(row);
+					
+		});
 
-  row.appendChild(firstNameCell);
-  row.appendChild(locationCell);
-  atableBody.appendChild(row);
-});
+		table.appendChild(tbody);
+
+		return table;
+		}	
+	
+		renderTable(studentsList);
+	
