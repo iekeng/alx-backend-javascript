@@ -8,7 +8,7 @@ function getList(field, lines) {
       studentList.push(firstName);
     }
   });
-  const list = studentList.join(',');
+  const list = studentList.join(', ');
   return list;
 }
 
