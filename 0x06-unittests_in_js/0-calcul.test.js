@@ -1,7 +1,7 @@
 const assert = require('assert');
 const calculateNumber = require('./0-calcul');
 
-describe('test suite', () => {
+describe('calculateNumber', () => {
   it('should return sum of both values', () => {
     const result = calculateNumber(1, 3);
     assert.equal(result, 4);
