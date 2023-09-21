@@ -1,4 +1,4 @@
-const app = require('./app');
+const app = require('./api');
 const request = require('request');
 const expect = require('chai').expect;
 
@@ -11,6 +11,8 @@ describe('Index page', function(){
     expect(res.statusCode).to.equal(200);
     expect(res.body).to.equal('Welcome to the payment system');
     done();
-    }).catch((error) => done(error);)
+    }).catch((error) => {
+      done(error);
+    });
   });
 });
