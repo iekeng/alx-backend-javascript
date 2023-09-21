@@ -9,7 +9,7 @@ app.get('/', (req, res) => {
   res.send('Welcome to the payment system');
 });
 
-app.get('/cart/:id(\\d+)', (req, send) => {
+app.get('/cart/:id', (req, res) => {
   const { id } = req.params;
   if (isNaN(id)) {
     res.statusCode = 404;
