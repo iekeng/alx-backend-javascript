@@ -20,6 +20,7 @@ function countStudents(path) {
   return new Promise((resolve, reject) => {
     const fieldCount = {};
     let lineCount = 0;
+    let output = '';
 
     fs.readFile(path, 'utf-8', (err, data) => {
       if (err) {
@@ -40,38 +41,36 @@ function countStudents(path) {
           }
         });
 
-        console.log(`Number of students: ${lineCount}`);
+        output += `Number of students: ${lineCount}\n`;
 
         for (const field in fieldCount) {
           if (field) {
-            console.log(`Number of students in ${field}: ${fieldCount[field]}. List: ${getList(field, lines)}`);
+            output += `Number of students in ${field}: ${fieldCount[field]}. List: ${getList(field, lines)}\n`;
           }
         }
 
-        resolve(); // Resolve the promise when processing is complete
+        resolve(output); // Resolve the promise when processing is complete
       }
     });
   });
 }
 
 app.get('/', (req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', ' text/plain');
   res.send('Hello Holberton School!');
 });
 
 app.get('/students', (req, res) => {
-  res.write('This is the list of our students\n');
+  const prelim = 'This is the list of our students';
   countStudents(process.argv[2])
     .then((data) => {
-      res.send(data.join('\n'));
+      const result = [prelim, data];
+      res.send(result.join('\n'));
     })
-    .catch(() => {
-      res.statusCode = 404;
-      res.send('Cannot load the database');
+    .catch((e) => {
+      console.log(e.message);
     });
 });
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+app.listen(port, () => console.log('Server running'));
 
 module.exports = app;
