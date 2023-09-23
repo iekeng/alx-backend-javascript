@@ -55,20 +55,23 @@ function countStudents(path) {
 }
 
 app.get('/', (req, res) => {
-  res.send('Hello Holberton School!');
+  res.statusCode = 200;
+  res.setHeader('Content-Type', ' text/plain');
+  res.end('Hello Holberton School!');
 });
 
-app.get('/students', (res, req) => {
+app.get('/students', (req, res) => {
   res.write('This is the list of our students\n');
   countStudents(process.argv[2])
     .then((data) => {
       res.send(data.join('\n'));
     })
     .catch(() => {
-      res.end('Cannot load the database');
+      res.statusCode = 404;
+      res.send('Cannot load the database');
     });
 });
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+app.listen(port, () => console.log(`Server is running on port ${port}`));
 
 module.exports = app;
