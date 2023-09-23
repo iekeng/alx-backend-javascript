@@ -20,6 +20,7 @@ function countStudents(path) {
   return new Promise((resolve, reject) => {
     const fieldCount = {};
     let lineCount = 0;
+    let output = '';
 
     fs.readFile(path, 'utf-8', (err, data) => {
       if (err) {
@@ -40,15 +41,15 @@ function countStudents(path) {
           }
         });
 
-        console.log(`Number of students: ${lineCount}`);
+        output += `Number of students: ${lineCount}\n`;
 
         for (const field in fieldCount) {
           if (field) {
-            console.log(`Number of students in ${field}: ${fieldCount[field]}. List: ${getList(field, lines)}`);
+            output += `Number of students in ${field}: ${fieldCount[field]}. List: ${getList(field, lines)}\n`;
           }
         }
 
-        resolve(); // Resolve the promise when processing is complete
+        resolve(output); // Resolve the promise when processing is complete
       }
     });
   });
@@ -64,10 +65,11 @@ const app = http.createServer((req, res) => {
     res.write('This is the list of our students\n');
     countStudents(process.argv[2])
       .then((data) => {
-        res.end(data.join('\n'));
+        res.end(data);
       })
-      .catch(() => {
+      .catch((error) => {
         res.statusCode = 404;
+        console.log(error);
         res.end('Cannot load the database');
       });
   }
