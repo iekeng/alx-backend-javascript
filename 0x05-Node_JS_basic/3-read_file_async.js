@@ -19,7 +19,7 @@ function countStudents(path) {
 
     fs.readFile(path, 'utf-8', (err, data) => {
       if (err) {
-        reject('Cannot load the database');
+        reject(new Error('Cannot load the database'));
       } else {
         const fieldLines = data.trim().split('\n');
         const lines = fieldLines.slice(1); // Use slice instead of splice to skip the header line
@@ -36,12 +36,12 @@ function countStudents(path) {
           }
         });
 
-        // Log the total number of students
         console.log(`Number of students: ${lineCount}`);
 
-        // Log the number of students in each field
         for (const field in fieldCount) {
-          console.log(`Number of students in ${field}: ${fieldCount[field]}. List: ${getList(field, lines)}`);
+          if (field) {
+            console.log(`Number of students in ${field}: ${fieldCount[field]}. List: ${getList(field, lines)}`);
+          }
         }
 
         resolve(); // Resolve the promise when processing is complete
